@@ -1,0 +1,10 @@
+description/
+__pycache__/
+*.py[cod]
+*.log
+.pytest_cache/
+.venv/
+
+# Peer data can be large; keep only directory placeholders in Git.
+peer_*/**
+!peer_*/.gitkeep
