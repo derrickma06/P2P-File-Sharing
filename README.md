@@ -2,7 +2,7 @@
 
 Python project for CNT4007 implementing a BitTorrent-style file-sharing protocol over TCP. Each peer downloads and uploads file pieces directly to other peers.
 
-**Current status:** scaffold only. Python and configuration files contain purpose comments; functionality is not implemented yet.
+**Current status:** runnable startup base. Loads and validates configuration, initializes storage and neighbor state, writes a startup log, then exits. TCP connections, protocol encoding, transfers, and neighbor selection are not implemented yet.
 
 ## Files
 
@@ -32,14 +32,16 @@ These modules separate configuration, networking, protocol encoding, storage, an
 4. Unchoked peers request random missing pieces, with one outstanding request per neighbor and no duplicate requests across neighbors. `storage.py` saves received pieces; `peer.py` announces them with `have` messages and updates interest and logs.
 5. A peer continues uploading after its own download finishes and exits only when all configured peers have the complete file.
 
-## Planned usage
+## Run
 
-Use Python 3.11 or newer. No third-party packages are planned.
+Use Python 3.11 or newer. No third-party packages are required.
 
-Once implemented, fill in both configuration files, place the source file in each initially complete peer's directory, and start peers in `PeerInfo.cfg` order:
+The included configs define three local peers with no initial file, so startup works without sample data:
 
 ```bash
-python peerProcess.py 1001
+python3 peerProcess.py 1001
 ```
 
-Repeat in separate terminals or on the configured hosts with each peer's ID.
+Repeat with `1002` or `1003`; each run creates `log_peer_<peer_id>.log`.
+
+To initialize a peer with the complete file, set its last `PeerInfo.cfg` field to `1` and put `shared.dat` in its `peer_<peer_id>/` directory. Its size must match `FileSize` in `Common.cfg`. File sharing will require at least one such peer and peers started in configuration order once networking is implemented.
