@@ -8,7 +8,7 @@ from p2p.peer import PeerProcess
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Initialize a P2P peer (startup base).")
+    parser = argparse.ArgumentParser(description="Run a P2P peer.")
     parser.add_argument("peer_id", type=int, help="ID from PeerInfo.cfg")
     args = parser.parse_args()
 
